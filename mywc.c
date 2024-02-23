@@ -23,18 +23,24 @@ int main(int argc, char *argv[])
         return -1;
     }
     
-    off_t contador_bytes = lseek(fd, 0, SEEK_END);
+    int contador_lineas = 0;
+    int contador_palabras = 0;
+    int contador_bytes = 0;
+    char c;
+    int bytes;
     
-    if (contador_bytes == -1) {
-    	perror("Error al obtener el tamaño del archivo");
-    	close(fd);
-    	return -1;
+    while ((bytes = read(fd, &c, sizeof(c))) > 0) {
+    	contador_bytes ++;
+    	if (c == '\n') {
+    		contador_lineas ++;
+    		contador_palabras ++;
+    	}
+    	if (c == ' ' || c == '\t') {
+    		contador_palabras ++;
+    	}
     }
     
-    printf("El tamaño del archivo es: %ld bytes\n", contador_bytes);
-
     close(fd);
-    // printf(" %d %d %d %s\n", contador_lineas, contador_palabras, contador_bytes, nombre_archivo);
-
+    printf(" %d %d %d %s\n", contador_lineas, contador_palabras, contador_bytes, nombre_archivo);
     return 0;
 }
