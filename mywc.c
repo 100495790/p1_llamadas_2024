@@ -1,5 +1,9 @@
 //P1-SSOO-23/24
 
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <stdio.h>
 
 
@@ -11,34 +15,26 @@ int main(int argc, char *argv[])
 		printf("Too few arguments\n");
 		return -1;
 	}
+    char *nombre_archivo = argv[1];
+    int fd = open(nombre_archivo, O_RDONLY); // abrimos el archivo en modo lectura
 
-    int *archivo = open(const char argv[1], int 0_RDONLY); // abrimos el archivo en modo lectura
-
-    if(NULL == archivo){
+    if(fd == -1){
         perror("No se pudo abrir el archivo");
         return -1;
     }
-
-    int byte = 0;	
-    int contador_bytes = 0;
-	int contador_palabras = 0;
-	int contador_lineas = 0;
-
-    while ((byte = getc(archivo)) != EOF) {
-		printf("%d\n", byte);
-        contador_bytes ++;
-		if (byte == '\n') {
-			contador_lineas ++; 
-			contador_palabras ++; 
-		}
-		if (byte == ' ' || byte =='\t') {
-			contador_palabras ++; 
-		}
-
+    
+    off_t contador_bytes = lseek(fd, 0, SEEK_END);
+    
+    if (contador_bytes == -1) {
+    	perror("Error al obtener el tamaño del archivo");
+    	close(fd);
+    	return -1;
     }
+    
+    printf("El tamaño del archivo es: %ld bytes\n", contador_bytes);
 
-    int close(int archivo);
-    printf("Contador bytes: %d\n", contador_bytes); 
-	printf("Contador palabras: %d\n", contador_palabras); 
-	printf("Contador lonst ch
+    close(fd);
+    // printf(" %d %d %d %s\n", contador_lineas, contador_palabras, contador_bytes, nombre_archivo);
+
+    return 0;
 }
