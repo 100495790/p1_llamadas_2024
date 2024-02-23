@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     int contador_lineas = 0;
     int contador_palabras = 0;
     int contador_bytes = 0;
-    
+
     char c;
     int bytes;
     
@@ -40,6 +40,13 @@ int main(int argc, char *argv[])
     	if (c == ' ' || c == '\t') {
     		contador_palabras ++;
     	}
+    }
+
+    char ultimoByte;
+    if (lseek(fd, -1, SEEK_END) != -1 && read(fd, &ultimoByte, 1) == 1) {
+        if (ultimoByte != ' ') {
+            contador_palabras ++;
+        }
     }
     
     close(fd);
