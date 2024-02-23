@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 		printf("Too few arguments\n");
 		return -1;
 	}
+
     char *nombre_archivo = argv[1];
     int fd = open(nombre_archivo, O_RDONLY); // abrimos el archivo en modo lectura
 
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     int contador_lineas = 0;
     int contador_palabras = 0;
     int contador_bytes = 0;
+    
     char c;
     int bytes;
     
