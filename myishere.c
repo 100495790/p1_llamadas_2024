@@ -1,5 +1,6 @@
 //P1-SSOO-23/24
 
+#include <fcntl.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <dirent.h>
@@ -15,5 +16,25 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+	char *dirname = argv[1];
+	DIR *dirp = opendir(dirname);	// Abrimos el directorio
+	char *nombre_archivo = argv[2];
+
+	if (dirp == NULL) {
+		perror("Error al abrir el directorio\n");
+		return -1;
+	}
+
+	struct dirent *entry;
+	while ((entry = readdir(dirp)) != NULL) {
+		if (entry->d_name == nombre_archivo) {
+			printf("File %s is in directory %s", nombre_archivo, entry->d_name);
+			closedir(dirp);	// Cerramos el directorio
+			return 0;
+		}
+	}
+	// Si el archivo no está
+	printf("File %s is not in directory %s", nombre_archivo, entry->d_name);
+	closedir(dirp);	// Cerramos el directorio
 	return 0;
 }

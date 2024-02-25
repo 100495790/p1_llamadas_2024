@@ -22,6 +22,7 @@ import os
 import glob
 import time
 import sys
+import shutil
 
 resultString=""
 result=0
@@ -478,7 +479,7 @@ if(__name__=="__main__"):
 		print ("CHECKER: NIA 1",u1, "NIA 2", u2, "NIA 3", u3)
 		
 		#Preparamos la carpeta temporal donde se realizaran las pruebas
-		tempFolder="/tmp/os/"
+		tempFolder= os.getcwd() + "/probador/"
 		testFile="f_aes.txt"
 		if os.path.exists(tempFolder):
 			subprocess.call(["rm", "-r",tempFolder])
@@ -524,4 +525,6 @@ if(__name__=="__main__"):
 		result
 		print ("Nota: ", result)
 		subprocess.call("echo " + str(result) + "> nota.txt", shell=True)
+
+		shutil.rmtree(tempFolder)
 		

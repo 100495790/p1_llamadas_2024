@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	
 	DIR *dirp = opendir(dirname);	// Abrimos el directorio
 
-	if (&dirp == NULL) {
+	if (dirp == NULL) {
 		perror("Error al abrir el directorio\n");
 		return -1;
 	}
