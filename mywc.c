@@ -30,11 +30,9 @@ int main(int argc, char *argv[])
     int contador_palabras = 0;
     int contador_bytes = 0;
 
-    char c;
-    int bytes;
-    
     // Leemos el archivo byte por byte
-    while ((bytes = read(fd, &c, sizeof(c))) > 0) {
+    char c;
+    while (read(fd, &c, sizeof(c)) > 0) {
         // Añadimos cada byte leído al contador
     	contador_bytes ++;
         // Si el byte es un salto de línea añadimos una línea al contador
