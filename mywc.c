@@ -16,9 +16,11 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+    // Abrimos el archivo en modo lectura
     char *nombre_archivo = argv[1];
-    int fd = open(nombre_archivo, O_RDONLY); // abrimos el archivo en modo lectura
+    int fd = open(nombre_archivo, O_RDONLY);
 
+	// Si no se encuentra el archivo imprimimos un error y devolvemos -1
     if(fd == -1){
         perror("No se pudo abrir el archivo");
         return -1;
@@ -31,8 +33,11 @@ int main(int argc, char *argv[])
     char c;
     int bytes;
     
+    // Leemos el archivo byte por byte
     while ((bytes = read(fd, &c, sizeof(c))) > 0) {
+        // Añadimos cada byte leído al contador
     	contador_bytes ++;
+        // Si el byte es un salto de línea añadimos una línea al contador
     	if (c == '\n') {
     		contador_lineas ++;
     		contador_palabras ++;
@@ -42,6 +47,7 @@ int main(int argc, char *argv[])
     	}
     }
 
+    // Si el último byte no es un espacio, no se tiene en cuenta la última palabra, por lo que hay que añadirla al contador
     char ultimoByte;
     if (lseek(fd, -1, SEEK_END) != -1 && read(fd, &ultimoByte, 1) == 1) {
         if (ultimoByte != ' ') {
@@ -49,6 +55,7 @@ int main(int argc, char *argv[])
         }
     }
     
+    // Cerramos el archivo e imprimimos la salida
     close(fd);
     printf(" %d %d %d %s\n", contador_lineas, contador_palabras, contador_bytes, nombre_archivo);
     return 0;
