@@ -55,6 +55,6 @@ int main(int argc, char *argv[])
     
     // Cerramos el archivo e imprimimos la salida
     close(fd);
-    printf(" %d %d %d %s\n", contador_lineas, contador_palabras, contador_bytes, nombre_archivo);
+    printf("%d %d %d %s\n", contador_lineas, contador_palabras, contador_bytes, nombre_archivo);
     return 0;
 }
